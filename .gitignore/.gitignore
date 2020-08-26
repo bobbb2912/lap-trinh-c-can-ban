@@ -1,0 +1,33 @@
+/*Viết chương trình giải phương trình bậc hai: ax2 + bx + c = 0, với a, b, c là các hệ số thực nhập
+vào từ bàn phím.*/
+
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+    float a, b, c;
+    float delta;
+
+    printf("Nhap 3 so a, b, c: ");
+    scanf("%f%f%f", &a, &b, &c);
+    if(a == 0){
+        if(b == 0){
+            if(c == 0)
+                printf("\nPhuong trinh co vo so nghiem.");
+            else
+                printf("\nPhuong trinh vo nghiem.");
+        }
+        else
+            printf("\nPhuong trinh co nghiem x = %0.2f", -c/b);
+    }
+    else{
+        delta = b*b - 4*a*c;
+        if(delta < 0)
+            printf("\nPhuong trinh vo nghiem.");
+        if(delta == 0)
+            printf("\nPhuong trinh co nghiem kep \nx = %0.2f", -b/(2*a));
+        if(delta > 0)
+            printf("\nPhuong trinh co hai nghiem \nx1 = %0.2f\nx2 = %0.2f", (-b+sqrt(delta))/(2*a), (-b-sqrt(delta))/(2*a));
+    }
+    return 0;
+}
