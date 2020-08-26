@@ -1,0 +1,66 @@
+/*Nhập vào một dãy n số bất kỳ từ bàn phím. Sau đó sắp xếp dãy số theo chiều tăng dần, giảm dần. In ra
+màn hình dãy số ban đầu và dãy số đã sắp xếp.*/
+
+#include <stdio.h>
+#include <math.h>
+#define N 100
+void nhap(int a[], int *n)
+{
+    *n = 0;
+    while(*n<=0){
+        printf("\nNhap n: ");
+        scanf("%d", n);
+    }
+    for(int i = 0; i < *n; i++){
+        printf("a[%d] = ", i);
+        scanf("%d", &a[i]);
+    }
+}
+
+void xuat(int a[], int n)
+{
+    for(int i = 0; i < n; i++){
+        printf("%5d", a[i]);
+    }
+}
+
+void sapXepGiam(int a[], int n)
+{
+    for(int i = 0; i < n-1; i++){
+        for(int j = i+1; j < n; j++){
+            if(a[i] < a[j]){
+                int tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
+        }
+    }
+}
+
+void sapXepTang(int a[], int n)
+{
+    for(int i = 0; i < n-1; i++){
+        for(int j = i+1; j < n; j++){
+            if(a[i] > a[j]){
+                int tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
+        }
+    }
+}
+int main(){
+    int a[N], n;
+    nhap(a, &n);
+    printf("\nMANG BAN DAU: \n");
+    xuat(a, n);
+
+    printf("\nSAP XEP GIAM: \n");
+    sapXepGiam(a, n);
+    xuat(a, n);
+
+    printf("\nSAP XEP TANG: \n");
+    sapXepTang(a, n);
+    xuat(a, n);
+    return 0;
+}
