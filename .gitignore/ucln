@@ -1,0 +1,22 @@
+/*Viết chương trình tìm ước số chung lớn nhất của hai số nguyên dương nhập vào từ bàn phím.*/
+
+#include <stdio.h>
+#include <math.h>
+
+
+int main(){
+    int a = 0, b = 0;
+    while(a <= 0 || b <= 0){
+        printf("Nhap a, b >0: ");
+        scanf("%d%d", &a, &b);
+    }
+    while(a != b){
+        if(a > b)
+            a-=b;
+        else
+            b-=a;
+    }
+    printf("ucln = %d", a);
+
+    return 0;
+}
