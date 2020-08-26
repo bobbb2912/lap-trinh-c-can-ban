@@ -1,0 +1,52 @@
+/*Viết chương trình nhập vào ma trận thực Anxm . Sau đó tìm giá trị lớn nhất, giá trị nhỏ nhất của
+ma trận này. In ma trận cùng kết quả tìm được ra màn hình.*/
+
+#include <stdio.h>
+#include <math.h>
+#define N 100
+void nhap(int a[][N], int *n, int *m)
+{
+    *n = 0, *m = 0;
+    while(*n <= 0 || *m <= 0){
+        printf("Nhap n,m>0: ");
+        scanf("%d%d", n, m);
+    }
+    for(int i = 0; i < *n; i++){
+        for(int j = 0; j < *m; j++){
+            printf("a[%d][%d] = ", i, j);
+            scanf("%d", &a[i][j]);
+        }
+    }
+}
+
+void xuat(int a[][N], int n, int m)
+{
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            printf("%5d", a[i][j]);
+        }
+        printf("\n\n");
+    }
+}
+
+void min_max(int a[][N], int n, int m)
+{
+    int min = a[0][0], max = a[0][0];
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            if(a[i][j] < min) min = a[i][j];
+            if(a[i][j] > max) max = a[i][j];
+        }
+    }
+    printf("\nMIN = %d\nMAX = %d", min, max);
+}
+int main(){
+    int a[N][N], n, m;
+
+    nhap(a, &n, &m);
+    printf("\nMa tran: \n");
+    xuat(a, n, m);
+    min_max(a, n, m);
+    return 0;
+}
