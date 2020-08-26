@@ -1,0 +1,31 @@
+/*Nhập vào 2 số là tháng và năm, kiểm tra xem tháng đó có bao nhiêu ngày. In kết quả ra màn
+hình theo dạng: Tháng 3 năm 2014 có 31 ngày.*/
+
+#include <stdio.h>
+#include <stdbool.h>
+
+bool ktranNamNhuan(int yy)
+{
+    if(yy%4 == 0 && yy % 100!= 0 || yy &400 ==0){
+        return true; //nam nhuan
+    }
+    return false;
+}
+int main(){
+    int mm, yy;
+    printf("Nhap thang nam: ");
+    scanf("%d%d", &mm, &yy);
+    if(mm >= 1 && mm <= 12 && yy >=1){
+        switch(mm){
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12: printf("\nCo 31 ngay."); break;
+            case 4: case 6: case 9: case 11: printf("\nCo 30 ngay.");
+            case 2: if(ktranNamNhuan(yy))
+                        printf("\nCo 29 ngay.");
+                    else printf("\nCo 28 ngay.");
+        }
+    }
+    else
+        printf("\nDinh dang thang nam sai!");
+
+    return 0;
+}
