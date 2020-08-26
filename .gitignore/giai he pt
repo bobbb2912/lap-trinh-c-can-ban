@@ -1,0 +1,34 @@
+/*Viết chương trình giải hệ 2 phương trình bậc nhất với a, b, c, d, e, f, là các hệ số thực
+nhập vào từ bàn phím. Thông báo kết quả ra màn hình.
+*/
+
+#include <stdio.h>
+#include <math.h>
+#define N 100
+
+int main(){
+    float a, b, c ,d, e, f;
+    float D, Dx, Dy;
+
+    printf("Nhap a, b ,c la he so cua pt thu nhat: ");
+    scanf("%f%f%f", &a, &b, &c);
+    printf("Nhap d, e ,f la he so cua pt thu hai: ");
+    scanf("%f%f%f", &d, &e, &f);
+
+    D = a*e - d*b;
+    Dx = c*e-f*b;
+    Dy = a*f-d*c;
+
+    if(D == 0){
+        if(Dx == Dy)
+            printf("\nPhuong trinh vo so nghiem.");
+        else
+            printf("\nPhuong trinh vo nghiem.");
+
+    }
+    else
+    {
+        printf("\nPhuong trinh co nghiem\nx = %0.3f\ny = %0.3f", Dx/D, Dy/D);
+    }
+    return 0;
+}
