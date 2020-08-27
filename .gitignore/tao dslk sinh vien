@@ -1,0 +1,202 @@
+/*sinh viên gồm các thành phần: Ho_ten, Tuoi, Diem_TB. Chương trình được tổ chức thành các chương trình
+con sau:
+1) Tạo danh sách sinh viên
+2) Hiển thị danh sách ra màn hình theo dạng
+DANH SACH SINH VIEN
+
+STT  Ho ten    Tuoi   Diem TB
+. . . . . .
+3) Chèn thêm một sinh viên vào sau sinh viên nào đó (có tên nhập vào từ bàn phím)
+4) Xóa một sinh viên
+5) Sửa một sinh viên
+Hàm main() hiển thị menu để chọn các chức năng.*/
+
+#include <stdio.h>
+#include <string.h>
+
+typedef struct SinhVien
+{
+    char hoten[20];
+    int tuoi;
+    float dtb;
+}sinhvien;
+
+typedef struct Node
+{
+    sinhvien data;
+    struct Node* next;
+}node;
+
+typedef struct List
+{
+    node *phead;
+    node *ptail;
+}list;
+
+node* taoNode(sinhvien *sv)
+{
+    node *p;
+    p = (node*)malloc(sizeof(node));
+    if(p == NULL) return NULL;
+    p->data = *sv;
+    p->next = NULL;
+    return p;
+}
+
+void khoiTaoDS(list *l)
+{
+    l->phead = l->ptail = NULL;
+}
+
+void nhap1SV(sinhvien *sv)
+{
+    printf("\nNhap ho ten: "); fflush(stdin);
+    gets(sv->hoten);
+    printf("\nNhap tuoi: ");
+    scanf("%d", &sv->tuoi);
+    printf("\nNhap diem trung binh: ");
+    scanf("%f", &sv->dtb);
+}
+
+void themNode(list *l, node *p)
+{
+    if(l->phead == NULL){
+        l->phead = l->ptail = p;
+        p->next = NULL;
+    }else{
+        l->ptail->next = p;
+        l->ptail = p;
+    }
+}
+
+void nhapDSSV(list *l, sinhvien*sv)
+{
+    node *p;
+    int chon, i = 1;
+    do{
+        printf("\nNhap sinh vien thu %d", i);
+        nhap1SV(&sv);
+        p = taoNode(&sv);
+        themNode(l, p);
+        i++;
+        printf("\nBan co muon nhap tiep khong(neu khong press 0): ");
+        scanf("%d", &chon);
+    }while(chon!=0);
+}
+
+void xuat1SV(sinhvien sv)
+{
+    printf("\n%-15s%-5d%-5.1f\n", sv.hoten, sv.tuoi, sv.dtb);
+}
+
+void xuatDSSV(list l)
+{
+    int i = 0;
+    printf("%-15s%-5s%-5s", "HO TEN", "TUOI", "DTB");
+    for(node *k = l.phead; k !=NULL; k = k->next)
+    {
+        xuat1SV(k->data);
+    }
+}
+
+void chenSV(list *l, sinhvien *sv)
+{
+    char ht[20];
+    node *k, *p;
+    printf("\nNhap sinh vien can chen: ");
+    nhap1SV(&sv);
+    p = taoNode(&sv);
+    printf("\nMuon chen sau sinh vien nao: ");
+    fflush(stdin);
+    gets(ht);
+    k = l->phead;
+    while(k != NULL && strcmp(k->data.hoten, ht)!= 0){
+        k = k->next;
+    }
+    if(k == NULL) printf("\nKhong tim thay.");
+    else {
+        p->next = k->next;
+        k->next = p;
+        printf("\n========== DANH SACH SAU KHI CHEN==========\n");
+        xuatDSSV(*l);
+    }
+}
+
+void xoaSV(list *l, sinhvien *sv)
+{
+    char ht[20];
+    node *p, *k;
+    printf("\nNhap ho ten sinh vien can xoa: "); fflush(stdin);
+    gets(ht);
+
+    k = l->phead;
+    while(k!=NULL && strcmp(k->data.hoten, ht)!=0){
+        p = k;
+        k = k->next;
+    }
+    if(k == NULL) printf("\nKhong tim thay.");
+    else{
+        p->next = k->next;
+        free(k);
+        printf("\n========== DANH SACH SAU KHI XOA==========\n");
+        xuatDSSV(*l);
+    }
+}
+
+void suaSV(list *l, sinhvien *sv)
+{
+    node *p, *k, *g;
+    char ht[20];
+    printf("\nNhap ho ten sinh vien can sua: ");
+    fflush(stdin);
+    gets(ht);
+    printf("\nNhap thong tin can sua: ");
+    nhap1SV(&sv);
+    g = taoNode(&sv);
+    k = l->phead;
+    while(k!=NULL && strcmp(k->data.hoten, ht)!=0){
+        p = k;
+        k = k->next;
+    }
+    if(k == NULL) printf("\nKhong tim thay.");
+    else{
+        if(k == l->phead){
+            g->next = k->next;
+            l->phead = g;
+            free(k);
+        }else{
+            g->next = k->next;
+            p->next = g;
+            free(k);
+        }
+        printf("\n========== DANH SACH SAU KHI SUA==========\n");
+        xuatDSSV(*l);
+    }
+}
+int main(){
+    list l;
+    sinhvien sv;
+    node* p;
+    khoiTaoDS(&l);
+    int chon;
+    do{
+        printf("\n========== MENU ==========\n"
+                "\n1. Tao danh sach sinh vien"
+                "\n2. Hien thi danh sach sinh vien"
+                "\n3. Chen them sinh vien"
+                "\n4. Xoa mot sinh vien"
+                "\n5. Sua mot sinh vien"
+                "\n6. Ket thuc"
+                "\nLua chon cua ban la?? \n");
+        scanf("%d", &chon);
+        switch(chon){
+            case 1: nhapDSSV(&l, &sv); break;
+            case 2: xuatDSSV(l); break;
+            case 3: chenSV(&l, &sv); break;
+            case 4: xoaSV(&l, &sv); break;
+            case 5: suaSV(&l, &sv); break;
+            case 6: break;
+        }
+    }while(chon!=6);
+    return 0;
+}
