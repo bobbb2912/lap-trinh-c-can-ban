@@ -1,0 +1,76 @@
+/*Viết chương trình nhập vào số nguyên dương n. Sau đó in ra màn hình ma trận xoáy Anxn , theo
+dạng sau:
+1 2 3
+8 9 4
+7 6 5 với n=3
+
+Chương trình được tổ chức thành các chương trình con sau:
+1) Nhập n
+2) Tính các phần tử của ma trận xoáy
+3) Hiển thị ma trận xoáy lên màn hình
+Hàm main() hiển thị menu để chọn các chức năng bằng cách nhập số tương ứng như sau*/
+
+#include <stdio.h>
+#include <string.h>
+#define N 100
+
+void nhap( int *n)
+{
+    *n = 0;
+    while(*n <= 0){
+        printf("Nhap n>0: ");
+        scanf("%d", n);
+    }
+
+}
+
+void maTranXoay(int a[][N], int n)
+{
+    int hang = n-1, cot = n-1, d = 0, gt = 1, i;
+
+    while(d <= n/2){
+        for(i = d; i <= cot; i++)
+            a[d][i] = gt++;
+        for(i = d+1; i <= hang; i++)
+            a[i][cot] = gt++;
+        for(i = cot-1; i >= d; i--)
+            a[hang][i] = gt++;
+        for(i = hang-1; i > d; i--)
+            a[i][d] = gt++;
+        d++;
+        hang--;
+        cot--;
+    }
+
+}
+
+void xuat(int a[][N], int n)
+{
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            printf("%5d", a[i][j]);
+        }
+        printf("\n\n");
+    }
+}
+
+
+int main(){
+    int a[N][N], n, chon;
+
+    do{
+        printf("\n======= MENU =======\n"
+               "\n1. Nhap n"
+               "\n2. Hien thi ma tran xoay"
+               "\n3. Thoat"
+               "\nLua chon cua ban???");
+        scanf("%d", &chon);
+        switch(chon){
+            case 1: nhap(&n); break;
+            case 2: maTranXoay(a, n);
+                    xuat(a, n); break;
+            case 3: break;
+        }
+    }while(chon != 3);
+    return 0;
+}
