@@ -1,0 +1,70 @@
+/*Viết chương trình nhập vào hai ma trận thực Anxp và Bpxm , sau đó tính ma trận tích Cnxm = Anxp
+ Bpxm. Chương trình được tổ chức thành các chương trình con sau:
+1) Nhập 1 ma trận
+2) Tính tích 2 ma trận
+3) Hiển thị 1 ma trận lên màn hình
+Hàm main() hiển thị menu để chọn các chức năng bằng cách nhập số tương ứng như sau
+1. Nhap 2 ma tran
+2. Tinh tich 2 ma tran
+3. Hien thi 3 ma tran
+4. Ket thuc*/
+
+#include <stdio.h>
+#define N 100
+
+void nhap(int a[][N], int *n, int *m)
+{
+    *n =  *m = 0;
+    while(*n <= 0 || *m <= 0){
+        printf("\nNhap n, m>0: ");
+        scanf("%d%d", n, m);
+    }
+    for(int i = 0; i < *n; i++){
+        for(int j = 0; j < *m; j++){
+            printf("\nPhan tu hang %d cot %d: ", i, j);
+            scanf("%d", &a[i][j]);
+        }
+    }
+}
+
+void xuat(int a[][N], int n, int m)
+{
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m ; j++){
+            printf("%5d", a[i][j]);
+        }
+        printf("\n\n");
+    }
+}
+
+void tichMaTran(int a[][N], int b[][N], int c[][N], int n, int p, int m)
+{
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            for(int k = 0; k < p; k++){
+                c[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+}
+
+int main(){
+    int a[N][N], b[N][N],c[N][N], n, m, p, q;
+    printf("Nhap ma tran A: ");
+    nhap(a, &n, &m);
+    printf("\nNhap ma tran B: ");
+    nhap(b, &p, &q);
+    printf("\nMa tran A: \n");
+    xuat(a, n, m);
+    printf("\nMa tran B: \n");
+    xuat(b, p, q);
+    if(m != p){
+        printf("\nHai ma tran khong kha tich!");
+    }
+    else{
+        tichMaTran(a, b, c, n, m, q);
+        printf("\nTich hai ma tran: \n");
+        xuat(c, n, q);
+    }
+    return 0;
+}
