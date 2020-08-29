@@ -1,0 +1,65 @@
+/*Viết chương trình nhập vào hai dãy số nguyên theo chiều tăng dần. Sau đó ghép các phần tử của
+hai dãy này để tạo thành dãy thứ ba vẫn theo chiều tăng dần mà không cần sắp xếp lại. Chương trình được tổ
+chức thành các chương trình con sau:
+1) Nhập 1 dãy số theo chiều tăng dần
+2) Ghép 2 dãy số ( đã được sắp xếp theo chiều tăng dần)
+3) In 1 dãy số
+Hàm main() hiển thị menu để chọn các chức năng bằng cách nhập số tương ứng như sau
+1. Nhap 2 day số nguyen theo chieu tang dan
+2. Ghep hai day
+3. In 3 day so
+4. Ket thuc
+Chức năng nào được chọn sẽ gọi thực hiện chương trình con tương ứng.*/
+
+#include <stdio.h>
+#define N 100
+void nhap(int a[], int *n)
+{
+    *n = 0;
+    while(*n <= 0){
+        printf("\nNhap so phan tu cua mang(n>0): ");
+        scanf("%d", n);
+    }
+    printf("\nNhap cac phan tu cua day theo thu tu tang dan: \n");
+    for(int i = 0; i < *n; i++){
+        printf("Phan tu thu %d la: ", i+1);
+        scanf("%d", &a[i]);
+    }
+}
+
+void xuat(int a[], int n)
+{
+    for(int i = 0; i < n; i++){
+        printf("%5d", a[i]);
+    }
+}
+
+void ghep2Mang(int a[], int b[], int c[], int n, int m)
+{
+    int i = 0, j = 0, k = 0;
+    while(i < n && j < m){
+        if(a[i] < b[j])
+            c[k++] = a[i++];
+        else c[k++] = b[j++];
+    }
+    while(i < n){
+        c[k++] = a[i++];
+    }
+    while(j < m){
+        c[k++] = b[j++];
+    }
+}
+
+int main(){
+    int a[N], b[N], c[N], n, m;
+    nhap(a, &n);
+    nhap(b, &m);
+    printf("\nDay A: \n");
+    xuat(a, n);
+    printf("\nDay B: \n");
+    xuat(b, m);
+    ghep2Mang(a, b, c, n, m);
+    printf("\nMang sau khi da ghep: \n");
+    xuat(c, n+m);
+    return 0;
+}
